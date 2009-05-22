@@ -14,29 +14,31 @@ You have to configure your puppetmaster so that exported ressources will work.
 --------
 Examples
 --------
+Client node ::
 
-node "my-nfs-client" {
-  include nfs::base
-  nfs::mount {"my mounted one":
-    share       => 'myshare',
-    mountpoint  => '/mnt/nfs',
-    srvrootdir  => '/srv/nfs',
-    ensure      => present,
+  node "my-nfs-client" {
+    include nfs::base
+    nfs::mount {"my mounted one":
+      share       => 'myshare',
+      mountpoint  => '/mnt/nfs',
+      srvrootdir  => '/srv/nfs',
+      ensure      => present,
+    }
+
+    nfs::mount {"my unwanted one":
+      share       => 'myshare',
+      mountpoint  => '/mnt/nfs',
+      srvrootdir  => '/srv/nfs',
+      ensure      => absent,
+    }
   }
 
-  nfs::mount {"my unwanted one":
-    share       => 'myshare',
-    mountpoint  => '/mnt/nfs',
-    srvrootdir  => '/srv/nfs',
-    ensure      => absent,
+Server node::
+  node "my-nfs-server" {
+    include nfs::server
+
+    Nfs::Export <<| |>>
   }
-}
-
-node "my-nfs-server" {
-  include nfs::server
-
-  Nfs::Export <<| |>>
-}
 
 
 -------------
