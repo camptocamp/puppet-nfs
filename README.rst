@@ -33,7 +33,7 @@ Client node ::
     }
   }
 
-Server node::
+Server node ::
   node "my-nfs-server" {
     include nfs::server
 
