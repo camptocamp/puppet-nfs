@@ -1,0 +1,16 @@
+class nfs::server inherits nfs::base {
+  
+  package {"nfs-kernel-server":
+    ensure => present,
+  }
+  
+  exec {"reload_nfs_srv":
+    command     => "/etc/init.d/nfs-kernel-server reload",
+    refreshonly => true,
+  }
+
+  service {"nfs-kernel-server":
+    enable      => "true",
+    pattern     => "nfsd"
+  }
+}
