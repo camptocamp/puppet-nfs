@@ -31,9 +31,14 @@ define nfs::mount($ensure=present,
         unless      => "test -d ${mountpoint}/${share}",
         require     => Package["nfs-common"],
       }
+      exec {"mount $share on $mountpoint":
+        command     => "mount -a",
+        unless      => "mount | egrep -q \"^${server}:${srvrootdir}/${share} \"\" ",
+      }
       Mount[$share] {
         require     => Exec["create ${mountpoint}/${share}"],
-        ensure      => mounted,
+        ensure      => present,
+        notify      => Exec["mount $share on $mountpoint"],
       }
     }
 
