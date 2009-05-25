@@ -14,6 +14,7 @@ You have to configure your puppetmaster so that exported ressources will work.
 --------
 Examples
 --------
+Client node ::
 
   node "my-nfs-client" {
     include nfs::base
@@ -32,6 +33,7 @@ Examples
     }
   }
 
+Server node ::
   node "my-nfs-server" {
     include nfs::server
 
