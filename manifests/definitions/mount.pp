@@ -34,6 +34,7 @@ define nfs::mount($ensure=present,
       exec {"mount $share on $mountpoint":
         command     => "mount -a",
         unless      => "mount | egrep -q \"^${server}:${srvrootdir}/${share} \"\" ",
+        refreshonly => true,
       }
       Mount[$share] {
         require     => Exec["create ${mountpoint}/${share}"],
@@ -46,6 +47,7 @@ define nfs::mount($ensure=present,
       exec {"remove ${mountpoint}/${share}":
         command     => "rmdir ${mountpoint}/${share}",
         onlyif      => "test -d ${mountpoint}/${share}",
+        refreshonly => true,
       }
       Mount[$share] {
         notify      => Exec["remove ${mountpoint}/${share}"],
