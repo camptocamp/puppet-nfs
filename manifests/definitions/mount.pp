@@ -3,32 +3,31 @@ define nfs::mount($ensure=present,
                   $mountpoint, 
                   $nfs_options, 
                   $rights, 
-                  $srvrootdir, 
                   $server) {
 
   # use exported ressources
   @@nfs::export {"$share for $fqdn":
     ensure          => $ensure,
-    srvrootdir      => $srvrootdir,
     share           => $share,
     options         => $nfs_options,
     rights          => $rights,
     guest           => $ipaddress,
+    tag             => $server,
   }
 
   mount {"$share":
-    device      => "${server}:${srvrootdir}/${share}",
+    device      => "${server}:${share}",
     fstype      => "nfs",
-    name        => "${mountpoint}/${share}",
+    name        => "${mountpoint}",
     options     => $rights,
     remounts    => false,
   }
 
   case $ensure {
     present: {
-      exec {"create ${mountpoint}/${share}":
-        command     => "mkdir -p ${mountpoint}/${share}",
-        unless      => "test -d ${mountpoint}/${share}",
+      exec {"create ${mountpoint}":
+        command     => "mkdir -p ${mountpoint}",
+        unless      => "test -d ${mountpoint}",
         require     => Package["nfs-common"],
       }
       exec {"mount $share on $mountpoint":
@@ -37,20 +36,20 @@ define nfs::mount($ensure=present,
         refreshonly => true,
       }
       Mount[$share] {
-        require     => Exec["create ${mountpoint}/${share}"],
+        require     => Exec["create ${mountpoint}"],
         ensure      => present,
         notify      => Exec["mount $share on $mountpoint"],
       }
     }
 
     absent: {
-      exec {"remove ${mountpoint}/${share}":
-        command     => "rmdir ${mountpoint}/${share}",
-        onlyif      => "test -d ${mountpoint}/${share}",
+      exec {"remove ${mountpoint}":
+        command     => "rmdir ${mountpoint}",
+        onlyif      => "test -d ${mountpoint}",
         refreshonly => true,
       }
       Mount[$share] {
-        notify      => Exec["remove ${mountpoint}/${share}"],
+        notify      => Exec["remove ${mountpoint}"],
         ensure      => unmounted,
       }
     }

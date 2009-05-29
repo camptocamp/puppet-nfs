@@ -19,17 +19,17 @@ Client node ::
   node "my-nfs-client" {
     include nfs::base
     nfs::mount {"my mounted one":
-      share       => 'myshare',
-      mountpoint  => '/mnt/nfs',
-      srvrootdir  => '/srv/nfs',
+      share       => '/srv/nfs/myshare',
+      mountpoint  => '/mnt/nfs/myshare',
       ensure      => present,
+      server      => "nfs.mydomain.ltd",
     }
 
     nfs::mount {"my unwanted one":
-      share       => 'myshare',
-      mountpoint  => '/mnt/nfs',
-      srvrootdir  => '/srv/nfs',
+      share       => '/srv/nfs/myshare',
+      mountpoint  => '/mnt/nfs/myshare',
       ensure      => absent,
+      server      => "nfs.mydomain.ltd",
     }
   }
 
@@ -37,7 +37,7 @@ Server node ::
   node "my-nfs-server" {
     include nfs::server
 
-    Nfs::Export <<| |>>
+    Nfs::Export <<| tag == "nfs.mydomain.ltd" |>>
   }
 
 
