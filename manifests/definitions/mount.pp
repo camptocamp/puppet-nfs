@@ -37,7 +37,7 @@ define nfs::mount($ensure=present,
       }
       Mount[$share] {
         require     => Exec["create ${mountpoint}"],
-        ensure      => present,
+        ensure      => mounted,
         notify      => Exec["mount $share on $mountpoint"],
       }
     }
