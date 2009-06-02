@@ -32,7 +32,7 @@ define nfs::mount($ensure=present,
       }
       exec {"mount $share on $mountpoint":
         command     => "mount -a",
-        unless      => "mount | egrep -q \"^${server}:${srvrootdir}/${share} \"\" ",
+        unless      => "mount | egrep -q \"^${server}:${share} \" ",
         refreshonly => true,
       }
       Mount[$share] {
