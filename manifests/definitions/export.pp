@@ -4,9 +4,10 @@ define nfs::export ($ensure=present,
                     $options,
                     $guest) {
 
-  $concatpart = substitute($share, '/', '-')
+  $concatshare = substitute($share, '/', '-')
+  $concatguest = substitute($guest, '/','-')
   
-  common::concatfilepart {"${concatpart}-on-${guest}":
+  common::concatfilepart {"${concatshare}-on-${concatguest}":
     ensure      => $ensure,
     content     => "${share}     ${guest}(${rights},${options})\n",
     file        => "/etc/exports",
