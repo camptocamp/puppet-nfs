@@ -25,25 +25,27 @@ define nfs::mount($ensure=present,
 
   case $ensure {
     present: {
-      exec {"create ${mountpoint}":
-        command     => "mkdir -p ${mountpoint}",
-        unless      => "test -d ${mountpoint}",
+      exec {"create ${mountpoint} and parents":
+        command => "mkdir -p ${mountpoint}",
+        unless  => "test -d ${mountpoint}",
+      }
+      file { $mountpoint:
+        ensure  => present,
+        require => Exec["create ${mountpoint} and parents"],
       }
       Mount[$share] {
-        require     => Exec["create ${mountpoint}"],
-        ensure      => mounted,
+        require => File[$mountpoint],
+        ensure  => mounted,
       }
     }
 
     absent: {
-      exec {"remove ${mountpoint}":
-        command     => "rmdir ${mountpoint}",
-        onlyif      => "test -d ${mountpoint}",
-        refreshonly => true,
+      file { $mountpoint:
+        ensure  => absent,
+        require => Mount[$share],
       }
       Mount[$share] {
-        notify      => Exec["remove ${mountpoint}"],
-        ensure      => unmounted,
+        ensure => unmounted,
       }
     }
   }
