@@ -1,8 +1,8 @@
-define nfs::mount($ensure=present, 
-                  $share, 
-                  $mountpoint, 
-                  $nfs_options, 
-                  $rights, 
+define nfs::mount($ensure=present,
+                  $share,
+                  $mountpoint,
+                  $nfs_options,
+                  $rights,
                   $server) {
 
   # use exported ressources
@@ -28,17 +28,10 @@ define nfs::mount($ensure=present,
       exec {"create ${mountpoint}":
         command     => "mkdir -p ${mountpoint}",
         unless      => "test -d ${mountpoint}",
-        require     => Package["nfs-common"],
-      }
-      exec {"mount $share on $mountpoint":
-        command     => "mount -a",
-        unless      => "mount | egrep -q \"^${server}:${share} \" ",
-        refreshonly => true,
       }
       Mount[$share] {
         require     => Exec["create ${mountpoint}"],
         ensure      => mounted,
-        notify      => Exec["mount $share on $mountpoint"],
       }
     }
 
