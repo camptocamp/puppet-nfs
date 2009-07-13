@@ -1,16 +1,17 @@
 define nfs::mount($ensure=present,
+                  $server,
                   $share,
                   $mountpoint,
-                  $nfs_options,
-                  $rights,
-                  $server) {
+                  $server_options=undef,
+                  $server_rights=undef,
+                  $client_options="defaults") {
 
   # use exported ressources
   @@nfs::export {"$share for $fqdn":
     ensure          => $ensure,
     share           => $share,
-    options         => $nfs_options,
-    rights          => $rights,
+    options         => $server_options,
+    rights          => $server_rights,
     guest           => $ipaddress,
     tag             => $server,
   }
@@ -19,7 +20,7 @@ define nfs::mount($ensure=present,
     device      => "${server}:${share}",
     fstype      => "nfs",
     name        => "${mountpoint}",
-    options     => $rights,
+    options     => $client_options,
     remounts    => false,
   }
 
