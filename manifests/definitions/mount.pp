@@ -4,7 +4,7 @@ define nfs::mount($ensure=present,
                   $mountpoint,
                   $server_options=undef,
                   $server_rights=undef,
-                  $client_options="defaults") {
+                  $client_options="auto") {
 
   # use exported ressources
   @@nfs::export {"$share for $fqdn":
@@ -22,6 +22,7 @@ define nfs::mount($ensure=present,
     name        => "${mountpoint}",
     options     => $client_options,
     remounts    => false,
+    atboot      => true,
   }
 
   case $ensure {
