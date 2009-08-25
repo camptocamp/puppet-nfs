@@ -31,12 +31,8 @@ define nfs::mount($ensure=present,
         command => "mkdir -p ${mountpoint}",
         unless  => "test -d ${mountpoint}",
       }
-      file { $mountpoint:
-        ensure  => present,
-        require => Exec["create ${mountpoint} and parents"],
-      }
       Mount[$share] {
-        require => File[$mountpoint],
+        require => Exec["create ${mountpoint} and parents"],
         ensure  => mounted,
       }
     }
