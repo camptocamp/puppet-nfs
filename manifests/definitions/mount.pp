@@ -32,7 +32,7 @@ define nfs::mount($ensure=present,
         unless  => "test -d ${mountpoint}",
       }
       Mount[$share] {
-        require => Exec["create ${mountpoint} and parents"],
+        require => [Exec["create ${mountpoint} and parents"], Class["nfs::base"]],
         ensure  => mounted,
       }
     }
