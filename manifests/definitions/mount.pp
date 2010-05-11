@@ -2,21 +2,19 @@ define nfs::mount($ensure=present,
                   $server,
                   $share,
                   $mountpoint,
-                  $server_options=undef,
-                  $server_rights=undef,
+                  $server_options="",
                   $client_options="auto") {
 
   # use exported ressources
-  @@nfs::export {"$share for $fqdn":
+  @@nfs::export {"shared $share by $server for $fqdn":
     ensure          => $ensure,
     share           => $share,
     options         => $server_options,
-    rights          => $server_rights,
     guest           => $ipaddress,
     tag             => $server,
   }
 
-  mount {"$share":
+  mount {"shared $share by $server":
     device      => "${server}:${share}",
     fstype      => "nfs",
     name        => "${mountpoint}",
@@ -31,7 +29,7 @@ define nfs::mount($ensure=present,
         command => "mkdir -p ${mountpoint}",
         unless  => "test -d ${mountpoint}",
       }
-      Mount[$share] {
+      Mount["shared $share by $server"] {
         require => [Exec["create ${mountpoint} and parents"], Class["nfs::base"]],
         ensure  => mounted,
       }
@@ -40,9 +38,9 @@ define nfs::mount($ensure=present,
     absent: {
       file { $mountpoint:
         ensure  => absent,
-        require => Mount[$share],
+        require => Mount["shared $share by $server"],
       }
-      Mount[$share] {
+      Mount["shared $share by $server"] {
         ensure => unmounted,
       }
     }
