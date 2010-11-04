@@ -30,7 +30,7 @@ define nfs::mount($ensure=present,
         unless  => "test -d ${mountpoint}",
       }
       Mount["shared $share by $server"] {
-        require => [Exec["create ${mountpoint} and parents"], Class["nfs::base"]],
+        require => [Exec["create ${mountpoint} and parents"], Class["nfs::client"]],
         ensure  => mounted,
       }
     }

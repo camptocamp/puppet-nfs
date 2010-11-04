@@ -17,7 +17,7 @@ Examples
 Client node ::
 
   node "my-nfs-client" {
-    include nfs::base
+    include nfs::client
     nfs::mount {"my mounted one":
       share       => '/srv/nfs/myshare',
       mountpoint  => '/mnt/nfs/myshare',
