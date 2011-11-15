@@ -1,6 +1,3 @@
-import "classes/*.pp"
-import "definitions/*.pp"
-
 class nfs::client {
   case $operatingsystem {
     Debian,Ubuntu:  { include nfs::client::debian}
@@ -9,9 +6,3 @@ class nfs::client {
   }
 }
 
-class nfs::server {
-  case $operatingsystem {
-    Debian,Ubuntu:  { include nfs::server::debian}
-    default:        { notice "Unsupported operatingsystem ${operatingsystem}" }
-  }
-}
