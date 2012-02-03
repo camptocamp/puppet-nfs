@@ -4,8 +4,13 @@ class nfs::client::redhat inherits nfs::base {
     ensure => present,
   }
 
-  if $lsbmajdistrelease == 6 {
+  if versioncmp($::operatingsystemrelease, "6.0") > 0 {
+    $osmajor = 6
+  } elsif versioncmp($::operatingsystemrelease, "5.0") > 0 {
+    $osmajor = 5
+  }
 
+  if $osmajor == 6 {
     package {"rpcbind":
       ensure => present,
     }
@@ -17,7 +22,7 @@ class nfs::client::redhat inherits nfs::base {
       require   => [Package["rpcbind"], Package["nfs-utils"]],
     }
 
-  } else {
+  } elsif $osmajor == 5 {
 
     package { "portmap":
       ensure => present,
@@ -30,23 +35,25 @@ class nfs::client::redhat inherits nfs::base {
       require   => [Package["portmap"], Package["nfs-utils"]],
     }
 
+  } else {
+    fail("Unknown major Redhat release: ${::operatingsystemrelease}")
   }
 
   service {"nfslock":
     ensure    => running,
     enable    => true,
     hasstatus => true,
-    require   => $lsbmajdistrelease ? {
-      6       => Service["rpcbind"],
-      default => [Package["portmap"], Package["nfs-utils"]]
+    require   => $osmajor ? {
+      6 => Service["rpcbind"],
+      5 => [Package["portmap"], Package["nfs-utils"]]
     },
   }
  
   service { "netfs":
     enable  => true,
-    require => $lsbmajdistrelease ? {
-      6       => Service["nfslock"],
-      default => [Service["portmap"], Service["nfslock"]],
+    require => $osmajor ? {
+      6 => Service["nfslock"],
+      5 => [Service["portmap"], Service["nfslock"]],
     },
   }
 
