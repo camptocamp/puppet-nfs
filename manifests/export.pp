@@ -3,8 +3,8 @@ define nfs::export ($ensure=present,
                     $options="",
                     $guest) {
 
-  $concatshare = substitute($share, '/', '-')
-  $concatguest = substitute($guest, '/','-')
+  $concatshare = gsub($share, '/', '-', 'G')
+  $concatguest = gsub($guest, '/', '-', 'G')
  
   if $options == "" {
     $content = "${share}     ${guest}\n"
