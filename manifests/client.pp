@@ -1,8 +1,8 @@
 class nfs::client {
-  case $operatingsystem {
+  case $::operatingsystem {
     Debian,Ubuntu:  { include nfs::client::debian}
     RedHat,CentOS:  { include nfs::client::redhat}
-    default:        { notice "Unsupported operatingsystem ${operatingsystem}" }
+    default:        { notice "Unsupported operatingsystem ${::operatingsystem}" }
   }
 }
 
