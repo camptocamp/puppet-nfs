@@ -12,10 +12,10 @@ define nfs::export ($ensure=present,
     $content = "${share}     ${guest}($options)\n"
   }
   
-  common::concatfilepart {"${concatshare}-on-${concatguest}":
-    ensure      => $ensure,
-    content     => $content,
-    file        => "/etc/exports",
-    notify      => Exec['reload_nfs_srv'],
+  concat::fragment {"${concatshare}-on-${concatguest}":
+    ensure  => $ensure,
+    content => $content,
+    target  => '/etc/exports',
   }
+
 }
