@@ -4,49 +4,30 @@ class nfs::client::redhat inherits nfs::base {
     ensure => present,
   }
 
-  if $lsbmajdistrelease == 6 {
+  $osrelease = split($::operatingsystemrelease, '[.]')
+  $osmajor = $osrelease[0]
 
-    package {"rpcbind":
-      ensure => present,
-    }
-
-    service {"rpcbind":
-      ensure    => running,
-      enable    => true,
-      hasstatus => true,
-      require   => [Package["rpcbind"], Package["nfs-utils"]],
-    }
-
-  } else {
-
-    package { "portmap":
-      ensure => present,
-    }    
-    
-    service { "portmap":
-      ensure    => running,
-      enable    => true,
-      hasstatus => true,
-      require   => [Package["portmap"], Package["nfs-utils"]],
-    }
-
+  case $osmajor {
+    5: { class{'nfs::client::redhat5': } }
+    6: { class{'nfs::client::redhat6': } }
+    default: { fail("Unsupported redhat release: ${osmajor}") }
   }
 
   service {"nfslock":
     ensure    => running,
     enable    => true,
     hasstatus => true,
-    require   => $lsbmajdistrelease ? {
-      6       => Service["rpcbind"],
-      default => [Package["portmap"], Package["nfs-utils"]]
+    require   => $osmajor ? {
+      5 => [Package["portmap"], Package["nfs-utils"]],
+      6 => Service["rpcbind"],
     },
   }
  
   service { "netfs":
     enable  => true,
-    require => $lsbmajdistrelease ? {
-      6       => Service["nfslock"],
-      default => [Service["portmap"], Service["nfslock"]],
+    require => $osmajor ? {
+      5 => [Service["portmap"], Service["nfslock"]],
+      6 => Service["nfslock"],
     },
   }
 
