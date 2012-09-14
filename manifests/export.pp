@@ -24,6 +24,7 @@ define nfs::export ($ensure=present,
   concat::fragment{"${concatshare}-on-${concatguest}":
     ensure  => $ensure,
     content => $content,
+    target  => '/etc/exports',
   }
 
 }
