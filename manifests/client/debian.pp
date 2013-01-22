@@ -1,13 +1,20 @@
 class nfs::client::debian inherits nfs::base {
 
-  case $lsbdistcodename {
-    squeeze:  {
+  case $operatingsystem {
+    Debian: {
+      case $lsbdistcodename {
+        squeeze:  {
+          $rpcbind_service_name = "portmap"
+          $rpcbind_package_name = "portmap" 
+        }
+        default:  {
+          $rpcbind_service_name = "rpcbind"
+          $rpcbind_package_name = "rpcbind" 
+        }
+      }
+    default:  {
       $rpcbind_service_name = "portmap"
       $rpcbind_package_name = "portmap" 
-    }
-    default:  {
-      $rpcbind_service_name = "rpcbind"
-      $rpcbind_package_name = "rpcbind" 
     }
   }
   
