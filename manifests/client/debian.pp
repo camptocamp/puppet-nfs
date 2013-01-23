@@ -1,6 +1,17 @@
 class nfs::client::debian inherits nfs::base {
 
-  package { ["nfs-common", "portmap"]:
+  case $lsbdistcodename {
+    squeeze:  {
+      $rpcbind_service_name = "portmap"
+      $rpcbind_package_name = "portmap" 
+    }
+    default:  {
+      $rpcbind_service_name = "rpcbind"
+      $rpcbind_package_name = "rpcbind" 
+    }
+  }
+  
+  package { ["nfs-common", "$rpcbind_package_name"]:
     ensure => present,
   }
  
@@ -11,11 +22,11 @@ class nfs::client::debian inherits nfs::base {
     require   => Package["nfs-common"],
   }
  
-  service { "portmap":
+  service { "$rpcbind_service_name":
     ensure    => running,
     enable    => true,
     hasstatus => false,
-    require   => Package["portmap"],
+    require   => Package["$rpcbind_package_name"],
   }
 
 }
