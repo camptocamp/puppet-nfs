@@ -14,13 +14,6 @@ define nfs::export ($ensure=present,
   
   $exports = "/etc/exports"
 
-  concat {$exports:
-    owner => root,
-    group => root,
-    mode  => 644,
-    notify  => Exec['reload_nfs_srv'],
-  }
-
   concat::fragment{"${concatshare}-on-${concatguest}":
     ensure  => $ensure,
     content => $content,
