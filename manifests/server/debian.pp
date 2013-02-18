@@ -1,7 +1,5 @@
 class nfs::server::debian inherits nfs::client::debian {
 
-  include concat::setup
-
   package {"nfs-kernel-server":
     ensure => present,
   }
