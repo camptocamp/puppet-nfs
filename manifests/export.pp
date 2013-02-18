@@ -3,8 +3,8 @@ define nfs::export ($ensure=present,
                     $options="",
                     $guest) {
 
-  $concatshare = regsubst($share, '/', '-')
-  $concatguest = regsubst($guest, '/','-')
+  $concatshare = regsubst($share, '/', '-', 'G')
+  $concatguest = regsubst($guest, '/','-', 'G')
  
   if $options == "" {
     $content = "${share}     ${guest}\n"
@@ -12,12 +12,10 @@ define nfs::export ($ensure=present,
     $content = "${share}     ${guest}($options)\n"
   }
   
-  $exports = "/etc/exports"
-
   concat::fragment{"${concatshare}-on-${concatguest}":
     ensure  => $ensure,
     content => $content,
-    target  => $exports,
+    target  => '/etc/exports',
   }
 
 }
