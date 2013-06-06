@@ -1,21 +1,23 @@
-class nfs::client::debian inherits nfs::base {
+class nfs::client::debian  {
 
-  package { ["nfs-common", "portmap"]:
+  include nfs::params
+
+  package { ['nfs-common', $nfs::params::portmap]:
     ensure => present,
   }
- 
-  service { "nfs-common":
+
+  service { 'nfs-common':
     ensure    => running,
     enable    => true,
     hasstatus => true,
-    require   => Package["nfs-common"],
+    require   => Package['nfs-common'],
   }
- 
-  service { "portmap":
+
+  service {$nfs::params::portmap:
     ensure    => running,
     enable    => true,
     hasstatus => false,
-    require   => Package["portmap"],
+    require   => Package[$nfs::params::portmap],
   }
 
 }
