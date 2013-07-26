@@ -4,7 +4,7 @@ class nfs::client::redhat inherits nfs::base {
     ensure => present,
   }
 
-  if $lsbmajdistrelease == 6 {
+  if $::operatingsystemrelease =~ /^6.*/ {
 
     package {"rpcbind":
       ensure => present,
@@ -36,16 +36,16 @@ class nfs::client::redhat inherits nfs::base {
     ensure    => running,
     enable    => true,
     hasstatus => true,
-    require   => $lsbmajdistrelease ? {
-      6       => Service["rpcbind"],
+    require   => $::operatingsystemrelease ? {
+      /^6.*/  => Service["rpcbind"],
       default => [Package["portmap"], Package["nfs-utils"]]
     },
   }
  
   service { "netfs":
     enable  => true,
-    require => $lsbmajdistrelease ? {
-      6       => Service["nfslock"],
+    require => $::operatingsystemrelease ? {
+      /^6.*/  => Service["nfslock"],
       default => [Service["portmap"], Service["nfslock"]],
     },
   }
