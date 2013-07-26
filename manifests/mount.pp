@@ -3,14 +3,21 @@ define nfs::mount($ensure=present,
                   $share,
                   $mountpoint,
                   $server_options="",
+                  $as="",
                   $client_options="auto") {
+
+  if $as == "" {
+    $guest = $ipaddress
+  } else {
+    $guest = $as
+  }
 
   # use exported ressources
   @@nfs::export {"shared $share by $server for $fqdn":
     ensure          => $ensure,
     share           => $share,
     options         => $server_options,
-    guest           => $ipaddress,
+    guest           => $guest,
     tag             => $server,
   }
 
