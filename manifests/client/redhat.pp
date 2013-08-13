@@ -1,53 +1,57 @@
 class nfs::client::redhat inherits nfs::base {
 
-  package { "nfs-utils":
+  package { 'nfs-utils':
     ensure => present,
   }
 
-  if $lsbmajdistrelease == 6 {
+  if $::lsbmajdistrelease == 6 {
 
-    package {"rpcbind":
+    package {'rpcbind':
       ensure => present,
     }
 
-    service {"rpcbind":
+    service {'rpcbind':
       ensure    => running,
       enable    => true,
       hasstatus => true,
-      require   => [Package["rpcbind"], Package["nfs-utils"]],
+      require   => [Package['rpcbind'], Package['nfs-utils']],
     }
 
   } else {
 
-    package { "portmap":
+    package { 'portmap':
       ensure => present,
-    }    
-    
-    service { "portmap":
+    }
+
+    service { 'portmap':
       ensure    => running,
       enable    => true,
       hasstatus => true,
-      require   => [Package["portmap"], Package["nfs-utils"]],
+      require   => [Package['portmap'], Package['nfs-utils']],
     }
 
   }
 
-  service {"nfslock":
+  $nfslock_requirement = $::lsbmajdistrelease ? {
+    6       => Service['rpcbind'],
+    default => [Package['portmap'], Package['nfs-utils']]
+  }
+
+  service {'nfslock':
     ensure    => running,
     enable    => true,
     hasstatus => true,
-    require   => $lsbmajdistrelease ? {
-      6       => Service["rpcbind"],
-      default => [Package["portmap"], Package["nfs-utils"]]
-    },
+    require   => $nfslock_requirement,
   }
- 
-  service { "netfs":
+
+  $netfs_requirement = $::lsbmajdistrelease ? {
+    6       => Service['nfslock'],
+    default => [Service['portmap'], Service['nfslock']],
+  }
+
+  service { 'netfs':
     enable  => true,
-    require => $lsbmajdistrelease ? {
-      6       => Service["nfslock"],
-      default => [Service["portmap"], Service["nfslock"]],
-    },
+    require => $netfs_requirement,
   }
 
 }
