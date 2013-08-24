@@ -4,7 +4,8 @@
 # Define an NFS server
 #
 class nfs::server(
-  $service_enable = true,
+  $service_enable  = true,
+  $service_running = true,
 ) {
   case $operatingsystem {
     Ubuntu:         { include nfs::server::ubuntu}
