@@ -1,23 +1,25 @@
-define nfs::mount($ensure=present,
-                  $server,
-                  $share,
-                  $mountpoint,
-                  $server_options="",
-                  $client_options="auto") {
+define nfs::mount(
+  $server,
+  $share,
+  $mountpoint,
+  $ensure=present,
+  $server_options='',
+  $client_options='auto',
+) {
 
   # use exported ressources
-  @@nfs::export {"shared $share by $server for $fqdn":
+  @@nfs::export {"shared ${share} by ${server} for ${::fqdn}":
     ensure          => $ensure,
     share           => $share,
     options         => $server_options,
-    guest           => $ipaddress,
+    guest           => $::ipaddress,
     tag             => $server,
   }
 
-  mount {"shared $share by $server":
+  mount {"shared ${share} by ${server}":
     device      => "${server}:${share}",
-    fstype      => "nfs",
-    name        => "${mountpoint}",
+    fstype      => 'nfs',
+    name        => $mountpoint,
     options     => $client_options,
     remounts    => false,
     atboot      => true,
@@ -29,8 +31,8 @@ define nfs::mount($ensure=present,
         command => "mkdir -p ${mountpoint}",
         unless  => "test -d ${mountpoint}",
       }
-      Mount["shared $share by $server"] {
-        require => [Exec["create ${mountpoint} and parents"], Class["nfs::client"]],
+      Mount["shared ${share} by ${server}"] {
+        require => [Exec["create ${mountpoint} and parents"], Class['nfs::client']],
         ensure  => mounted,
       }
     }
@@ -38,9 +40,9 @@ define nfs::mount($ensure=present,
     absent: {
       file { $mountpoint:
         ensure  => absent,
-        require => Mount["shared $share by $server"],
+        require => Mount["shared ${share} by ${server}"],
       }
-      Mount["shared $share by $server"] {
+      Mount["shared ${share} by ${server}"] {
         ensure => unmounted,
       }
     }
