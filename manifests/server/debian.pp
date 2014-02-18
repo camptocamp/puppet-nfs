@@ -17,7 +17,7 @@ class nfs::server::debian inherits nfs::client::debian {
     pattern => "nfsd"
   }
 
-  concat {'/etc/exports':
+  @concat {'/etc/exports':
     owner  => root,
     group  => root,
     mode   => '0644',

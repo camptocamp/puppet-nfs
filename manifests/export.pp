@@ -14,6 +14,8 @@ define nfs::export (
     $content = "${share}     ${guest}($options)\n"
   }
 
+  Concat <| title == '/etc/exports' |>
+
   concat::fragment {"${name}-${concatshare}-on-${concatguest}":
     ensure  => $ensure,
     content => $content,
