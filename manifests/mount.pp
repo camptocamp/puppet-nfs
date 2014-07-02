@@ -27,12 +27,13 @@ define nfs::mount(
 
   case $ensure {
     present: {
-      exec {"create ${mountpoint} and parents":
-        command => "mkdir -p ${mountpoint}",
-        unless  => "test -d ${mountpoint}",
+      file {"create ${mountpoint} and parents":
+        ensure => directory,
+        recurse => true,
+        path   => "${mountpoint}",
       }
       Mount["shared ${share} by ${server}"] {
-        require => [Exec["create ${mountpoint} and parents"], Class['nfs::client']],
+        require => [File["create ${mountpoint} and parents"], Class['nfs::client']],
         ensure  => mounted,
       }
     }
