@@ -1,6 +1,6 @@
 {
   "name": "camptocamp-nfs",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Camptocamp",
   "summary": "Puppet OpenLDAP module",
   "license": "Apache 2.0",
@@ -9,7 +9,7 @@
   "issues_url": "https://github.com/camptocamp/puppet-nfs/issues",
   "dependencies": [
     {
-      "name": "puppetlabs/concat",
+      "name": "puppetlabs/concat"
     }
   ],
   "requirements": [
