@@ -19,7 +19,7 @@ define nfs::export (
   concat::fragment {"${name}-${concatshare}-on-${concatguest}":
     ensure  => $ensure,
     content => $content,
-    target  => '/etc/exports',
+    target  => '/etc/exports'
   }
 
 }
