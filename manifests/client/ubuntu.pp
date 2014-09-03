@@ -5,7 +5,7 @@ class nfs::client::ubuntu inherits nfs::client::debian {
   Package['portmap'] {
     name => 'rpcbind'
   }
-  if $::operatingsystemrelease > 13.10 {
+  if $::operatingsystemrelease >= 13.10 {
     Service['portmap'] {
       name => 'rpcbind'
     }
