@@ -1,7 +1,7 @@
 class nfs::server::debian inherits nfs::client::debian {
 
   package {"nfs-kernel-server":
-    ensure => present,
+    ensure => present
   }
   
   exec {"reload_nfs_srv":
@@ -21,7 +21,7 @@ class nfs::server::debian inherits nfs::client::debian {
     owner  => root,
     group  => root,
     mode   => '0644',
-    notify => Exec['reload_nfs_srv'],
+    notify => Exec['reload_nfs_srv']
   }
 
 }

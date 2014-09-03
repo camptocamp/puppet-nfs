@@ -5,7 +5,7 @@
 #
 class nfs::server(
   $service_enable  = true,
-  $service_running = true,
+  $service_running = true
 ) {
   case $::operatingsystem {
     Ubuntu:         { include ::nfs::server::ubuntu}

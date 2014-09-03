@@ -10,7 +10,7 @@ class nfs::server::redhat inherits nfs::client::redhat {
     ensure    => running,
     enable    => true,
     hasstatus => true,
-    require   => Package[ 'nfs-utils' ],
+    require   => Package[ 'nfs-utils' ]
   }
 
 }
