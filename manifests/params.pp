@@ -1,6 +1,6 @@
 # Set default parameters based on distribution release
 class nfs::params {
-  $portmap = $::osfamily? {
+  $portmap = $::operatingsystem? {
     'Debian' => $::lsbdistcodename? {
       'Wheezy' => 'rpcbind',
       default  => 'portmap',
