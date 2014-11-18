@@ -1,11 +1,20 @@
 define nfs::mount(
   $server,
   $share,
-  $mountpoint,
-  $ensure=present,
-  $server_options='',
-  $client_options='auto',
+  $mountpoint     = '',
+  $ensure         = present,
+  $server_options = '',
+  $client_options = 'auto',
 ) {
+
+  include nfs::client
+
+  $real_mountpoint = $mountpoint? {
+    ''      => $name,
+    default => $mountpoint
+  }
+
+  validate_absolute_path($real_mountpoint)
 
   # use exported ressources
   @@nfs::export {"shared ${share} by ${server} for ${::fqdn}":
@@ -19,7 +28,7 @@ define nfs::mount(
   mount {"shared ${share} by ${server}":
     device      => "${server}:${share}",
     fstype      => 'nfs',
-    name        => $mountpoint,
+    name        => $real_mountpoint,
     options     => $client_options,
     remounts    => false,
     atboot      => true,
@@ -27,18 +36,18 @@ define nfs::mount(
 
   case $ensure {
     present: {
-      exec {"create ${mountpoint} and parents":
-        command => "mkdir -p ${mountpoint}",
-        unless  => "test -d ${mountpoint}",
+      exec {"create ${real_mountpoint} and parents":
+        command => "mkdir -p ${real_mountpoint}",
+        unless  => "test -d ${real_mountpoint}",
       }
       Mount["shared ${share} by ${server}"] {
-        require => [Exec["create ${mountpoint} and parents"], Class['nfs::client']],
+        require => [Exec["create ${real_mountpoint} and parents"], Class['nfs::client']],
         ensure  => mounted,
       }
     }
 
     absent: {
-      file { $mountpoint:
+      file { $real_mountpoint:
         ensure  => absent,
         require => Mount["shared ${share} by ${server}"],
       }
