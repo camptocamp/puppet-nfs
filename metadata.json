@@ -1,8 +1,8 @@
 {
   "name": "camptocamp-nfs",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "Camptocamp",
-  "summary": "Puppet OpenLDAP module",
+  "summary": "Puppet NFS module",
   "license": "Apache 2.0",
   "source": "https://github.com/camptocamp/puppet-nfs",
   "project_page": "https://github.com/camptocamp/puppet-nfs",
