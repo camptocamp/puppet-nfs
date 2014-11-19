@@ -1,3 +1,4 @@
+# Specific settings for client on Redhat distribution.
 class nfs::client::redhat inherits nfs::base {
 
   package { 'nfs-utils':

@@ -1,3 +1,7 @@
+# ==Class: nfs::client
+#
+# This class configures NFS on client side
+#
 class nfs::client {
   case $::operatingsystem {
     'Ubuntu':            { include ::nfs::client::ubuntu}

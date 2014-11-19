@@ -1,20 +1,21 @@
+# Specific settings for server on Debian
 class nfs::server::debian inherits nfs::client::debian {
 
-  package {"nfs-kernel-server":
+  package {'nfs-kernel-server':
     ensure => present,
   }
-  
-  exec {"reload_nfs_srv":
-    command     => "/etc/init.d/nfs-kernel-server reload",
+
+  exec {'reload_nfs_srv':
+    command     => '/etc/init.d/nfs-kernel-server reload',
     onlyif      => '/etc/init.d/nfs-kernel-server status',
     refreshonly => true,
-    require     => Package["nfs-kernel-server"]
+    require     => Package['nfs-kernel-server']
   }
 
-  service {"nfs-kernel-server":
-    enable  => $nfs::server::service_enable,
+  service {'nfs-kernel-server':
     ensure  => $nfs::server::service_running,
-    pattern => "nfsd"
+    enable  => $nfs::server::service_enable,
+    pattern => 'nfsd',
   }
 
   @concat {'/etc/exports':

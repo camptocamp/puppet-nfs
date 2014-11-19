@@ -1,3 +1,4 @@
+# Specific settings for client on Debian distribution.
 class nfs::client::debian  {
 
   include nfs::params

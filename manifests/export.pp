@@ -1,3 +1,4 @@
+# Defines an NFS export
 define nfs::export (
   $guest,
   $share,
@@ -11,7 +12,7 @@ define nfs::export (
   if $options == '' {
     $content = "${share}     ${guest}\n"
   } else {
-    $content = "${share}     ${guest}($options)\n"
+    $content = "${share}     ${guest}(${options})\n"
   }
 
   Concat <| title == '/etc/exports' |>
