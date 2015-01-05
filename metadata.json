@@ -3,7 +3,7 @@
   "version": "0.1.7",
   "author": "Camptocamp",
   "summary": "Puppet NFS module",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "source": "https://github.com/camptocamp/puppet-nfs",
   "project_page": "https://github.com/camptocamp/puppet-nfs",
   "issues_url": "https://github.com/camptocamp/puppet-nfs/issues",
