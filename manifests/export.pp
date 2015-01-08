@@ -2,17 +2,17 @@
 define nfs::export (
   $guest,
   $share,
-  $ensure=present,
-  $options='',
+  $ensure  = 'present',
+  $options = undef,
 ) {
 
   $concatshare = regsubst($share, '/', '-', 'G')
   $concatguest = regsubst($guest, '/','-', 'G')
 
-  if $options == '' {
-    $content = "${share}     ${guest}\n"
-  } else {
+  if $options {
     $content = "${share}     ${guest}(${options})\n"
+  } else {
+    $content = "${share}     ${guest}\n"
   }
 
   Concat <| title == '/etc/exports' |>

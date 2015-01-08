@@ -3,9 +3,9 @@ define nfs::mount(
   $server,
   $share,
   $mountpoint,
-  $ensure=present,
-  $server_options='',
-  $client_options='auto',
+  $ensure         = 'present',
+  $server_options = undef,
+  $client_options = 'auto',
 ) {
 
   # use exported ressources
