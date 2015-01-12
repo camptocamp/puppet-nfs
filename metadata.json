@@ -9,7 +9,8 @@
   "issues_url": "https://github.com/camptocamp/puppet-nfs/issues",
   "dependencies": [
     {
-      "name": "puppetlabs/concat"
+      "name": "puppetlabs/concat",
+      "version_requirement": ">=1.0.0 <2.0.0"
     }
   ],
   "requirements": [
