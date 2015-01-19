@@ -1,7 +1,7 @@
 # Specific settings for client on Debian distribution.
 class nfs::client::debian  {
 
-  include nfs::params
+  include ::nfs::params
 
   package { ['nfs-common', $nfs::params::portmap]:
     ensure => present,
