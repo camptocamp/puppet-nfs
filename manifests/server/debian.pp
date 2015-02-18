@@ -9,7 +9,7 @@ class nfs::server::debian inherits nfs::client::debian {
     command     => '/etc/init.d/nfs-kernel-server reload',
     onlyif      => '/etc/init.d/nfs-kernel-server status',
     refreshonly => true,
-    require     => Package['nfs-kernel-server']
+    require     => Package['nfs-kernel-server'],
   }
 
   service {'nfs-kernel-server':
