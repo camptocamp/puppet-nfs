@@ -5,7 +5,7 @@ class nfs::client::redhat inherits nfs::base {
     ensure => present,
   }
 
-  if $::operatingsystemmajrelease == 6 {
+  if versioncmp($::operatingsystemmajrelease, '6') == 0 {
 
     package {'rpcbind':
       ensure => present,
