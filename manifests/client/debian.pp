@@ -3,7 +3,7 @@ class nfs::client::debian  {
 
   include ::nfs::params
 
-  package { ['nfs-common', $nfs::params::portmap::package]:
+  package { ['nfs-common', $nfs::params::portmap_package]:
     ensure => present,
   }
 
@@ -14,11 +14,11 @@ class nfs::client::debian  {
     require   => Package['nfs-common'],
   }
 
-  service {$nfs::params::portmap::service:
+  service {$nfs::params::portmap_service:
     ensure    => running,
     enable    => true,
     hasstatus => false,
-    require   => Package[$nfs::params::portmap::package],
+    require   => Package[$nfs::params::portmap_package],
   }
 
 }

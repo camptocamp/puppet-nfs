@@ -3,5 +3,5 @@ class nfs::client::ubuntu inherits nfs::client::debian {
   Service['nfs-common'] {
     name => 'statd',
   }
-  Package[$nfs::params::portmap::package] { }
+  Package[$nfs::params::portmap_package] { }
 }
