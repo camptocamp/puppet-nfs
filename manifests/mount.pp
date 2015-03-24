@@ -22,7 +22,7 @@ define nfs::mount(
     fstype   => 'nfs',
     name     => $mountpoint,
     options  => $client_options,
-    remounts => false,
+    remounts => true,
     atboot   => true,
   }
 
