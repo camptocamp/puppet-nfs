@@ -5,24 +5,12 @@ class nfs::server::debian inherits nfs::client::debian {
     ensure => present,
   }
 
-  exec {'reload_nfs_srv':
-    command     => '/etc/init.d/nfs-kernel-server reload',
-    onlyif      => '/etc/init.d/nfs-kernel-server status',
-    refreshonly => true,
-    require     => Package['nfs-kernel-server'],
-  }
-
-  service {'nfs-kernel-server':
+  service {'nfs':
     ensure  => $nfs::server::service_running,
     enable  => $nfs::server::service_enable,
+    name    => 'nfs-kernel-server',
     pattern => 'nfsd',
-  }
-
-  @concat {'/etc/exports':
-    owner  => root,
-    group  => root,
-    mode   => '0644',
-    notify => Exec['reload_nfs_srv'],
+    require => Package['nfs-kernel-server'],
   }
 
 }

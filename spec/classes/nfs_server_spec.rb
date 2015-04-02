@@ -1,12 +1,15 @@
 require 'spec_helper'
-describe 'nfs::server' do
-  context 'when on Debian' do
-    let (:facts) { {
-      :operatingsystem => 'Debian',
-      :osfamily        => 'Debian',
-      :lsbdistcodename => 'wheezy',
-    } }
 
-    it { should compile.with_all_deps }
+describe 'nfs::server' do
+  on_supported_os.each do |os, facts|
+    context "when on #{os}" do
+      let (:facts) do
+        facts.merge({
+          :concat_basedir => '/tmp'
+        })
+      end
+
+      it { should compile.with_all_deps }
+    end
   end
 end
