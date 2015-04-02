@@ -13,4 +13,9 @@ class nfs::server(
     /^(RedHat|CentOS)$/: { include ::nfs::server::redhat }
     default:        { notice "Unsupported operatingsystem ${::operatingsystem}" }
   }
+  concat::fragment {"00-etc-export-header":
+    ensure  => present,
+    content => '# File managed by Puppet',
+    target  => '/etc/exports',
+  }
 }
