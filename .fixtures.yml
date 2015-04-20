@@ -1,5 +1,5 @@
 fixtures:
-  repositories:
-    "concat": "git://github.com/puppetlabs/puppetlabs-concat.git"
+  forge_modules:
+    concat: 'puppetlabs-concat'
   symlinks:
-    "nfs": "#{source_dir}"
+    nfs: "#{source_dir}"
