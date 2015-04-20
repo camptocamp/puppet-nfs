@@ -1,12 +1,14 @@
 require 'spec_helper'
-describe 'nfs::client' do
-  context 'when on Debian' do
-    let (:facts) { {
-      :operatingsystem => 'Debian',
-      :osfamily        => 'Debian',
-      :lsbdistcodename => 'wheezy',
-    } }
 
-    it { should compile.with_all_deps }
+describe 'nfs::client' do
+
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts
+      end
+
+      it { is_expected.to compile.with_all_deps }
+    end
   end
 end
