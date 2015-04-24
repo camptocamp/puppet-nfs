@@ -34,7 +34,7 @@ class nfs::client::redhat inherits nfs::base {
   }
 
   $nfslock_requirement = $::operatingsystemmajrelease ? {
-    6       => Service['rpcbind'],
+    '6'     => Service['rpcbind'],
     default => [Package['portmap'], Package['nfs-utils']]
   }
 
@@ -46,7 +46,7 @@ class nfs::client::redhat inherits nfs::base {
   }
 
   $netfs_requirement = $::operatingsystemmajrelease ? {
-    6       => Service['nfslock'],
+    '6'     => Service['nfslock'],
     default => [Service['portmap'], Service['nfslock']],
   }
 
