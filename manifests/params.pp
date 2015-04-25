@@ -2,8 +2,8 @@
 class nfs::params {
   $portmap = $::operatingsystem? {
     'Debian' => versioncmp($::operatingsystemmajrelease, 7)? {
-      1    => 'rpcbind',
-      0    => 'rpcbind',
+      '1'  => 'rpcbind',
+      '0'  => 'rpcbind',
       '-1' => 'portmap',
     },
     'Ubuntu' => 'rpcbind',
