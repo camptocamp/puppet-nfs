@@ -3,6 +3,7 @@ class nfs::params {
   $portmap = $::operatingsystem? {
     'Debian' => $::lsbdistcodename? {
       'Wheezy' => 'rpcbind',
+      'Jessie' => 'rpcbind',
       default  => 'portmap',
     },
     'Ubuntu' => 'rpcbind',
