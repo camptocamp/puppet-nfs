@@ -4,6 +4,7 @@ define nfs::mount(
   $share,
   $mountpoint,
   $ensure         = 'present',
+  $guest          = $::ipaddress,
   $server_options = undef,
   $client_options = 'auto',
 ) {
@@ -13,7 +14,7 @@ define nfs::mount(
     ensure  => $ensure,
     share   => $share,
     options => $server_options,
-    guest   => $::ipaddress,
+    guest   => $guest,
     tag     => $server,
   }
 
