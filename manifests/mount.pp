@@ -31,6 +31,7 @@ define nfs::mount(
       exec {"create ${mountpoint} and parents":
         command => "mkdir -p ${mountpoint}",
         unless  => "test -d ${mountpoint}",
+        path    => $::path,
       }
       Mount["shared ${share} by ${server}"] {
         require => [Exec["create ${mountpoint} and parents"], Class['nfs::client']],
