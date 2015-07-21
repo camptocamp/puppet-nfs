@@ -5,54 +5,60 @@ class nfs::client::redhat inherits nfs::base {
     ensure => present,
   }
 
-  if versioncmp($::operatingsystemmajrelease, '6') == 0 {
-
-    package {'rpcbind':
-      ensure => present,
+  case $::operatingsystemmajrelease {
+    '5': {
+      $service = 'portmap'
+      $nfslock = true
+      $netfs = true
     }
-
-    service {'rpcbind':
-      ensure    => running,
-      enable    => true,
-      hasstatus => true,
-      require   => [Package['rpcbind'], Package['nfs-utils']],
+    '6': {
+      $service = 'rpcbind'
+      $nfslock = true
+      $netfs = true
     }
-
-  } else {
-
-    package { 'portmap':
-      ensure => present,
+    '7': {
+      $service = 'rpcbind'
+      $nfslock = false
+      $netfs = false
     }
-
-    service { 'portmap':
-      ensure    => running,
-      enable    => true,
-      hasstatus => true,
-      require   => [Package['portmap'], Package['nfs-utils']],
-    }
-
+    default: { fail('This version of Red Hat is not supported!') }
   }
 
-  $nfslock_requirement = $::operatingsystemmajrelease ? {
-    '6'     => Service['rpcbind'],
-    default => [Package['portmap'], Package['nfs-utils']]
+  package {$service:
+    ensure => present,
   }
 
-  service {'nfslock':
+  service {$service:
     ensure    => running,
     enable    => true,
     hasstatus => true,
-    require   => $nfslock_requirement,
+    require   => [Package[$service], Package['nfs-utils']],
   }
 
-  $netfs_requirement = $::operatingsystemmajrelease ? {
-    '6'     => Service['nfslock'],
-    default => [Service['portmap'], Service['nfslock']],
+  if ($nfslock) {
+    $nfslock_requirement = $::operatingsystemmajrelease ? {
+      '6'     => Service['rpcbind'],
+      default => [Package['portmap'], Package['nfs-utils']]
+    }
+
+    service {'nfslock':
+      ensure    => running,
+      enable    => true,
+      hasstatus => true,
+      require   => $nfslock_requirement,
+    }
   }
 
-  service { 'netfs':
-    enable  => true,
-    require => $netfs_requirement,
+  if ($netfs) {
+    $netfs_requirement = $::operatingsystemmajrelease ? {
+      '6'     => Service['nfslock'],
+      default => [Service['portmap'], Service['nfslock']],
+    }
+
+    service { 'netfs':
+      enable  => true,
+      require => $netfs_requirement,
+    }
   }
 
 }
