@@ -1,6 +1,6 @@
 {
   "name": "camptocamp-nfs",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "author": "Camptocamp",
   "summary": "Puppet NFS module",
   "license": "Apache-2.0",
