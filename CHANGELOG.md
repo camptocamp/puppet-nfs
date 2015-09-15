@@ -1,3 +1,7 @@
+## 2015-09-15 - Release 0.2.0
+
+Add support for Oracle Linux
+
 ## 2015-08-21 - Release 0.1.19
 
 Use docker for acceptance tests
