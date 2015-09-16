@@ -40,7 +40,7 @@ class nfs::client::redhat inherits nfs::base {
     hasstatus => true,
     require   => $nfslock_requirement,
   }
-  if  versioncmp($::operatingsystemmajrelease, '7')  != 0 {
+  if  versioncmp($::operatingsystemmajrelease, '7')  < 0 {
     service { 'netfs':
       enable  => true,
       require => $netfs_requirement,
