@@ -9,7 +9,6 @@ class nfs::server::redhat inherits nfs::client::redhat {
   $servicename = $::operatingsystemmajrelease ? {
     '7'     => 'nfs-server',
     default => 'nfs'
-
   }
 
   service{ 'nfs':
