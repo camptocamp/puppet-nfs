@@ -1,3 +1,7 @@
+## 2015-09-21 - Release 0.3.0
+
+Add RHEL 7 support
+
 ## 2015-09-15 - Release 0.2.0
 
 Add support for Oracle Linux
