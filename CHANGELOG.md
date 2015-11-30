@@ -1,3 +1,7 @@
+## 2015-11-30 - Release 0.3.1
+
+Fix RHEL 7
+
 ## 2015-09-21 - Release 0.3.0
 
 Add RHEL 7 support
