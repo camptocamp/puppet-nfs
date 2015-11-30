@@ -18,7 +18,7 @@ class nfs::client::redhat inherits nfs::base {
     }
     '7': {
       $nfslock_requirement = [Service['nfs-client']]
-      $nfslock_service     = 'nfs-lock'
+      $nfslock_service     = 'rpc-statd'
       $nfsclient_service   = 'rpcbind'
       $nfsclient_package   = 'rpcbind'
       $netfs_requirement   = undef
