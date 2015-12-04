@@ -7,7 +7,8 @@ class nfs::client::redhat inherits nfs::base {
       $nfsclient_package   = 'portmap'
       $nfsclient_service   = 'portmap'
       $nfslock_service     = 'nfslock'
-      $netfs_requirement  = [Service['nfs-client'], Service['nfslock']]
+      $netfs_requirement   = [Service['nfs-client'], Service['nfslock']]
+      $provider            = undef
     }
     '6' : {
       $nfslock_requirement = [Service['nfs-client']]
@@ -15,6 +16,7 @@ class nfs::client::redhat inherits nfs::base {
       $nfsclient_service   = 'rpcbind'
       $nfsclient_package   = 'rpcbind'
       $netfs_requirement   = [Service['nfslock']]
+      $provider            = undef
     }
     '7': {
       $nfslock_requirement = [Service['nfs-client']]
@@ -22,6 +24,7 @@ class nfs::client::redhat inherits nfs::base {
       $nfsclient_service   = 'rpcbind'
       $nfsclient_package   = 'rpcbind'
       $netfs_requirement   = undef
+      $provider            = 'redhat'
     }
     default : {
       fail('This Major release is not supported')
@@ -36,6 +39,7 @@ class nfs::client::redhat inherits nfs::base {
   service { 'nfslock':
     ensure    => running,
     name      => $nfslock_service,
+    provider  => $provider,
     enable    => true,
     hasstatus => true,
     require   => $nfslock_requirement,
@@ -54,6 +58,7 @@ class nfs::client::redhat inherits nfs::base {
   service {'nfs-client':
       ensure    => running,
       name      => $nfsclient_service,
+      provider  => $provider,
       enable    => true,
       hasstatus => true,
       require   => $nfsclient_requirement,
