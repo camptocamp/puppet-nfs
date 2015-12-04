@@ -1,3 +1,7 @@
+## 2015-12-04 - Release 0.3.2
+
+Fix convergence on RedHat 7
+
 ## 2015-11-30 - Release 0.3.1
 
 Fix RHEL 7
