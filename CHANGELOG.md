@@ -1,3 +1,7 @@
+## 2016-08-03 - Release 0.3.3
+
+Update statd service name on Ubuntu 16.04
+
 ## 2015-12-04 - Release 0.3.2
 
 Fix convergence on RedHat 7
