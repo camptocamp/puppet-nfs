@@ -1,3 +1,8 @@
+## 2016-08-03 - Release 0.4.0
+
+- Update concat requirement to enable 2.x version (fix #53)
+- Refactor client/debian and add Xenial support (fix #56)
+
 ## 2016-08-03 - Release 0.3.3
 
 Update statd service name on Ubuntu 16.04
