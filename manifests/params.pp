@@ -18,7 +18,6 @@ class nfs::params {
       $statd_service = 'nfs-common'
     }
     'Ubuntu': {
-      $portmap_service = 'rpcbind'
       $portmap_package = 'rpcbind'
       if versioncmp($::operatingsystemrelease, '16.04') >= 0 {
         $portmap_enable = undef
@@ -26,6 +25,11 @@ class nfs::params {
       } else {
         $portmap_enable = true
         $statd_service = 'statd'
+      }
+      if versioncmp($::operatingsystemrelease, '14.04') >= 0 {
+        $portmap_service = 'rpcbind'
+      } else {
+        $portmap_service = 'rpcbind-boot'
       }
     }
     default: {
