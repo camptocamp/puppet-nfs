@@ -1,3 +1,9 @@
+## 2018-08-30 - Release 0.4.1
+
+- Update test harness
+- Fix tests (GH #62)
+- Fix concat::fragment compatibility (GH #61)
+
 ## 2016-08-03 - Release 0.4.0
 
 - Update concat requirement to enable 2.x version (fix #53)
