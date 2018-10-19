@@ -8,14 +8,20 @@ class nfs::params {
         'squeeze': {
           $portmap_service = 'portmap'
           $portmap_package = 'portmap'
+          $statd_service   = 'nfs-common'
+        }
+        'stretch', 'buster': {
+          $portmap_service = 'rpcbind'
+          $portmap_package = 'rpcbind'
+          $statd_service   = 'rpc-statd'
         }
         default: {
           $portmap_service = 'rpcbind'
           $portmap_package = 'rpcbind'
+          $statd_service   = 'nfs-common'
         }
       }
       $portmap_enable = true
-      $statd_service = 'nfs-common'
     }
     'Ubuntu': {
       $portmap_service = 'rpcbind'
