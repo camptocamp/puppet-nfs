@@ -1,3 +1,7 @@
+## 2019-01-08 - Release 0.4.3
+
+- Actually fix nfs-client on RedHat 7 (GH #67)
+
 ## 2018-12-07 - Release 0.4.2
 
 - Remove nfs provider for RedHat 7 (GH #66)
