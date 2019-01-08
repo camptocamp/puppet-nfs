@@ -1,3 +1,8 @@
+## 2018-12-07 - Release 0.4.2
+
+- Remove nfs provider for RedHat 7 (GH #66)
+- Change puppetlabs-concat dependency to less than 6.0 (GH #64)
+
 ## 2018-08-30 - Release 0.4.1
 
 - Update test harness
