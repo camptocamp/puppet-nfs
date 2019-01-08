@@ -5,7 +5,6 @@ NFS Puppet module
 [![Puppet Forge Downloads](http://img.shields.io/puppetforge/dt/camptocamp/nfs.svg)](https://forge.puppetlabs.com/camptocamp/nfs)
 [![Build Status](https://img.shields.io/travis/camptocamp/puppet-nfs/master.svg)](https://travis-ci.org/camptocamp/puppet-nfs)
 [![Puppet Forge Endorsement](https://img.shields.io/puppetforge/e/camptocamp/nfs.svg)](https://forge.puppetlabs.com/camptocamp/nfs)
-[![Gemnasium](https://img.shields.io/gemnasium/camptocamp/puppet-nfs.svg)](https://gemnasium.com/camptocamp/puppet-nfs)
 [![By Camptocamp](https://img.shields.io/badge/by-camptocamp-fb7047.svg)](http://www.camptocamp.com)
 
 
