@@ -17,7 +17,7 @@ define nfs::mount(
     tag     => $server,
   }
 
-  mount {"shared ${share} by ${server}":
+  mount {"shared ${share} by ${server} mounted on ${mountpoint}":
     device   => "${server}:${share}",
     fstype   => 'nfs',
     name     => $mountpoint,
@@ -33,7 +33,7 @@ define nfs::mount(
         unless  => "test -d ${mountpoint}",
         path    => $::path,
       }
-      Mount["shared ${share} by ${server}"] {
+      Mount["shared ${share} by ${server} mounted on ${mountpoint}"] {
         require => [Exec["create ${mountpoint} and parents"], Class['nfs::client']],
         ensure  => mounted,
       }
@@ -42,9 +42,9 @@ define nfs::mount(
     'absent': {
       file { $mountpoint:
         ensure  => absent,
-        require => Mount["shared ${share} by ${server}"],
+        require => Mount["shared ${share} by ${server} mounted on ${mountpoint}"],
       }
-      Mount["shared ${share} by ${server}"] {
+      Mount["shared ${share} by ${server} mounted on ${mountpoint}"] {
         ensure => unmounted,
       }
     }
