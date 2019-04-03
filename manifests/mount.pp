@@ -8,8 +8,8 @@ define nfs::mount(
   $client_options = 'auto',
 ) {
 
-  # use exported ressources
-  @@nfs::export {"shared ${share} by ${server} for ${::fqdn}":
+  # use exported resources
+  @@nfs::export {"shared ${share} by ${server} for ${::fqdn} mounted on ${mountpoint}":
     ensure  => $ensure,
     share   => $share,
     options => $server_options,
