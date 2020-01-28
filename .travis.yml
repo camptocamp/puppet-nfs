@@ -18,7 +18,7 @@ stages:
   - spec
   - acceptance
   -
-    if: tag =~ ^v\d
+    if: tag =~ ^\d
     name: deploy
 matrix:
   fast_finish: true
@@ -41,5 +41,15 @@ branches:
   only:
     - master
     - /^v\d/
+    - /^\d/
 notifications:
   email: false
+deploy:
+  provider: puppetforge
+  user: camptocamp
+  password:
+    secure: "ZgHcCFzPY4m0F8E4l0d6PHKdlFYcDPuYiPo8RBfPOQJP+FwcpGAbC/7wLt4qZXx6l7Aw55u9en3hVdoWlsmz+ttBoxecJiMBYf2V70U63C2CltR0iDqYULPPCAz9u6TQHq4GQ+bIR+BZOMkD+kghRP38oxj39WsBszqsb5AzfsM="
+  on:
+    tags: true
+    all_branches: true
+    condition: "$DEPLOY_TO_FORGE = yes"
