@@ -1,6 +1,5 @@
 require 'spec_helper'
 describe 'nfs::server' do
-
   on_supported_os.each do |os, facts|
     context "on #{os}" do
       let(:facts) do

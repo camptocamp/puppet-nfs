@@ -51,6 +51,12 @@
       ]
     }
   ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.10.0 < 7.0.0"
+    }
+  ],
   "puppet_version": [
     "2.7",
     "3.0",
@@ -61,5 +67,8 @@
     "3.5",
     "3.6",
     "3.7"
-  ]
+  ],
+  "pdk-version": "1.15.0",
+  "template-url": "pdk-default#1.15.0",
+  "template-ref": "tags/1.15.0-0-g0bc522e"
 }

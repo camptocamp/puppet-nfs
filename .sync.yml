@@ -1,3 +1,16 @@
 ---
 .travis.yml:
-  forge_password: "ZgHcCFzPY4m0F8E4l0d6PHKdlFYcDPuYiPo8RBfPOQJP+FwcpGAbC/7wLt4qZXx6l7Aw55u9en3hVdoWlsmz+ttBoxecJiMBYf2V70U63C2CltR0iDqYULPPCAz9u6TQHq4GQ+bIR+BZOMkD+kghRP38oxj39WsBszqsb5AzfsM="
+  user: camptocamp
+  secure: "ZgHcCFzPY4m0F8E4l0d6PHKdlFYcDPuYiPo8RBfPOQJP+FwcpGAbC/7wLt4qZXx6l7Aw55u9en3hVdoWlsmz+ttBoxecJiMBYf2V70U63C2CltR0iDqYULPPCAz9u6TQHq4GQ+bIR+BZOMkD+kghRP38oxj39WsBszqsb5AzfsM="
+  branches:
+    - master
+    - /^\d/
+  deploy_to_forge:
+    enabled: true
+    tag_regex: "^\\d"
+Gemfile:
+  optional:
+    ':development':
+      - gem: 'github_changelog_generator'
+Rakefile:
+  changelog_version_tag_pattern: '%s'
