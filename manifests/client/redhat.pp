@@ -23,6 +23,13 @@ class nfs::client::redhat inherits nfs::base {
       $nfsclient_package   = 'rpcbind'
       $netfs_requirement   = undef
     }
+    '8': {
+      $nfslock_requirement = undef
+      $nfslock_service     = 'rpc-statd'
+      $nfsclient_service   = undef
+      $nfsclient_package   = 'rpcbind'
+      $netfs_requirement   = undef
+    }
     default : {
       fail('This Major release is not supported')
     }
