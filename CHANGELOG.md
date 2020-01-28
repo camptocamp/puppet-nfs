@@ -1,3 +1,10 @@
+## 2020-01-28 - Release 0.5.0
+
+- Fix duplicate declaration error (GH #69)
+- Convert to PDK (GH #70)
+- Add RHEL 8 support (GH #71)
+- Update mount to allow definition of guest IP (GH #43)
+
 ## 2019-01-08 - Release 0.4.3
 
 - Actually fix nfs-client on RedHat 7 (GH #67)
