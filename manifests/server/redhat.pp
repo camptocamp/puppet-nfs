@@ -6,9 +6,10 @@
 #
 class nfs::server::redhat inherits nfs::client::redhat {
 
-  $servicename = $::operatingsystemmajrelease ? {
-    '7'     => 'nfs-server',
-    default => 'nfs'
+  if Integer($::operatingsystemmajrelease) >= 7 {
+    $servicename = 'nfs-server'
+  } else {
+    $servicename = 'nfs'
   }
 
   service{ 'nfs':
