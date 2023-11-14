@@ -10,64 +10,40 @@
   "dependencies": [
     {
       "name": "puppetlabs/concat",
-      "version_requirement": ">=1.0.0 <6.0.0"
+      "version_requirement": ">= 1.0.0 < 10.0.0"
     },
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">=4.0.0 <6.0.0"
+      "version_requirement": ">= 4.0.0 < 10.0.0"
     }
   ],
   "operatingsystem_support": [
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "6",
-        "7",
-        "8"
+        "11",
+        "12"
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "10.04",
-        "12.04",
-        "14.04"
+        "20.04",
+        "22.04"
       ]
     },
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "5",
-        "6",
-        "7",
         "8"
-      ]
-    },
-    {
-      "operatingsystem": "OracleLinux",
-      "operatingsystemrelease": [
-        "5",
-        "6",
-        "7"
       ]
     }
   ],
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.10.0 < 7.0.0"
+      "version_requirement": ">= 4.10.0 < 9.0.0"
     }
-  ],
-  "puppet_version": [
-    "2.7",
-    "3.0",
-    "3.1",
-    "3.2",
-    "3.3",
-    "3.4",
-    "3.5",
-    "3.6",
-    "3.7"
   ],
   "pdk-version": "1.15.0",
   "template-url": "pdk-default#1.15.0",

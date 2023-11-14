@@ -5,7 +5,6 @@ define nfs::export (
   $ensure  = 'present',
   $options = undef,
 ) {
-
   $concatshare = regsubst($share, '/', '-', 'G')
   $concatguest = regsubst($guest, '/','-', 'G')
 
@@ -17,10 +16,9 @@ define nfs::export (
 
   Concat <| title == '/etc/exports' |>
   if $ensure == 'present' {
-    concat::fragment {"${name}-${concatshare}-on-${concatguest}":
+    concat::fragment { "${name}-${concatshare}-on-${concatguest}":
       content => $content,
       target  => '/etc/exports',
     }
   }
-
 }
