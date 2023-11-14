@@ -7,17 +7,16 @@
 class nfs::server::redhat inherits nfs::client::redhat {
   service { 'nfs':
     ensure    => running,
-    name      => $servicename,
+    name      => 'nfs-server',
     enable    => true,
     hasstatus => true,
-    require   => Package[ 'nfs-utils' ],
+    require   => Package['nfs-utils'],
   }
 
-  @concat {'/etc/exports':
+  @concat { '/etc/exports':
     owner  => root,
     group  => root,
     mode   => '0644',
     notify => Service['nfs'],
   }
-
 }

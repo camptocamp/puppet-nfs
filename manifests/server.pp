@@ -3,7 +3,7 @@
 #
 # Define an NFS server
 #
-class nfs::server(
+class nfs::server (
   $service_enable  = true,
   $service_running = true,
 ) {

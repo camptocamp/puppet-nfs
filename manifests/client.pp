@@ -9,4 +9,3 @@ class nfs::client {
     default: { notice "Unsupported operating system ${facts['os']['family']}" }
   }
 }
-

@@ -1,5 +1,5 @@
 # This defines an NFS mount point
-define nfs::mount(
+define nfs::mount (
   $server,
   $share,
   $mountpoint,
@@ -8,7 +8,6 @@ define nfs::mount(
   $server_options = undef,
   $client_options = 'auto',
 ) {
-
   # use exported resources
   @@nfs::export { "shared ${share} by ${server} for ${facts['networking']['fqdn']} mounted on ${mountpoint}":
     ensure  => $ensure,
@@ -18,7 +17,7 @@ define nfs::mount(
     tag     => $server,
   }
 
-  mount {"shared ${share} by ${server} mounted on ${mountpoint}":
+  mount { "shared ${share} by ${server} mounted on ${mountpoint}":
     device   => "${server}:${share}",
     fstype   => 'nfs',
     name     => $mountpoint,
@@ -29,7 +28,7 @@ define nfs::mount(
 
   case $ensure {
     'present': {
-      exec {"create ${mountpoint} and parents":
+      exec { "create ${mountpoint} and parents":
         command => "mkdir -p ${mountpoint}",
         unless  => "test -d ${mountpoint}",
         path    => $facts['path'],
@@ -54,5 +53,4 @@ define nfs::mount(
       fail('Ensure should be `present` or `absent`')
     }
   }
-
 }
