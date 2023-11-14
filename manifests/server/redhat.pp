@@ -5,14 +5,7 @@
 # TODO: add NFS v4 support
 #
 class nfs::server::redhat inherits nfs::client::redhat {
-
-  if Integer($::operatingsystemmajrelease) >= 7 {
-    $servicename = 'nfs-server'
-  } else {
-    $servicename = 'nfs'
-  }
-
-  service{ 'nfs':
+  service { 'nfs':
     ensure    => running,
     name      => $servicename,
     enable    => true,

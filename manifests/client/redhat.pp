@@ -1,28 +1,6 @@
 # Specific settings for client on Redhat distribution.
 class nfs::client::redhat inherits nfs::base {
-
-  case  $::operatingsystemmajrelease {
-    '5' : {
-      $nfslock_requirement = [Package['nfs-client'], Package['nfs-utils']]
-      $nfsclient_package   = 'portmap'
-      $nfsclient_service   = 'portmap'
-      $nfslock_service     = 'nfslock'
-      $netfs_requirement   = [Service['nfs-client'], Service['nfslock']]
-    }
-    '6' : {
-      $nfslock_requirement = [Service['nfs-client']]
-      $nfslock_service     = 'nfslock'
-      $nfsclient_service   = 'rpcbind'
-      $nfsclient_package   = 'rpcbind'
-      $netfs_requirement   = [Service['nfslock']]
-    }
-    '7': {
-      $nfslock_requirement = undef
-      $nfslock_service     = 'rpc-statd'
-      $nfsclient_service   = undef
-      $nfsclient_package   = 'rpcbind'
-      $netfs_requirement   = undef
-    }
+  case $facts['os']['release']['major'] {
     '8': {
       $nfslock_requirement = undef
       $nfslock_service     = 'rpc-statd'
