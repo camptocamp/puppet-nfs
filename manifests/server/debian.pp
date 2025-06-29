@@ -2,7 +2,7 @@
 class nfs::server::debian inherits nfs::client::debian {
 
   package {'nfs-kernel-server':
-    ensure => present,
+    ensure => installed,
   }
 
   exec {'reload_nfs_srv':

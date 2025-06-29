@@ -4,7 +4,7 @@ class nfs::client::debian  {
   include ::nfs::params
 
   package { ['nfs-common', $nfs::params::portmap_package]:
-    ensure => present,
+    ensure => installed,
   }
 
   service {$::nfs::params::statd_service:

@@ -37,7 +37,7 @@ class nfs::client::redhat inherits nfs::base {
   # common items for all versions
   $nfsclient_requirement  = [Package['nfs-client'], Package['nfs-utils']]
   package { 'nfs-utils':
-    ensure => present,
+    ensure => installed,
   }
 
   service { 'nfslock':
@@ -54,7 +54,7 @@ class nfs::client::redhat inherits nfs::base {
     }
   }
   package { 'nfs-client':
-    ensure => present,
+    ensure => installed,
     name   => $nfsclient_package,
   }
 
