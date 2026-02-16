@@ -10,15 +10,15 @@ class nfs::params {
           $portmap_package = 'portmap'
           $statd_service   = 'nfs-common'
         }
-        'stretch', 'buster': {
+        'wheezy', 'jessie': {
           $portmap_service = 'rpcbind'
           $portmap_package = 'rpcbind'
-          $statd_service   = 'rpc-statd'
+          $statd_service   = 'nfs-common'
         }
         default: {
           $portmap_service = 'rpcbind'
           $portmap_package = 'rpcbind'
-          $statd_service   = 'nfs-common'
+          $statd_service   = 'rpc-statd'
         }
       }
       $portmap_enable = true
